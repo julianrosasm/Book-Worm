@@ -1,4 +1,4 @@
 chromadb
 langchain
-bs4
+requests
 markdownify
