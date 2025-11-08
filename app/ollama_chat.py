@@ -1,7 +1,5 @@
 import requests
-import json
 import sys
-import os
 sys.path.append('.')
 
 from query import query_books
@@ -66,7 +64,7 @@ class BookWormOllamaRAG:
             print(f"❌ Ollama connection error: {e}")
             return False
     
-    def getRelevantContext(self, query, series_filter=None, max_book_number=None, n_results=5):
+    def getRelevantContext(self, query, series_filter=None, book_filter=None, max_book_number=None, n_results=15):
         """Retrieve relevant context from ChromaDB"""
         
         # Build filter
@@ -75,6 +73,13 @@ class BookWormOllamaRAG:
         
         if series_filter:
             filters.append({"series": series_filter})
+        if book_filter:
+            # Filter by book name (matches source_book or name field)
+            book_filters = [
+                {"source_book": {"$eq": book_filter}},
+                {"name": {"$eq": book_filter}}
+            ]
+            filters.append({"$or": book_filters})
         if max_book_number is not None:
             filters.append({"book_number": {"$lte": max_book_number}})
         
@@ -170,14 +175,15 @@ class BookWormOllamaRAG:
         except Exception as e:
             return f"Error calling Ollama: {e}"
     
-    def ask(self, question, series_filter=None, max_book_number=None, 
-            show_context=False, n_results=5):
+    def ask(self, question, series_filter=None, book_filter=None, max_book_number=None, 
+            show_context=False, n_results=15):
         """
         Ask a question about your books and get an AI-generated response
         
         Args:
             question: Your question about the books
             series_filter: Filter by series (e.g., "HarryPotter", "RedRising")
+            book_filter: Filter by specific book (e.g., "Light Bringer", "Philosopher's Stone")
             max_book_number: Prevent spoilers by limiting to books 1-N
             show_context: Whether to show the retrieved context
             n_results: Number of context chunks to retrieve
@@ -193,6 +199,8 @@ class BookWormOllamaRAG:
         
         if series_filter:
             print(f"📚 Series filter: {series_filter}")
+        if book_filter:
+            print(f"📖 Book filter: {book_filter}")
         if max_book_number:
             print(f"📖 Spoiler protection: Books 1-{max_book_number} only")
         
@@ -200,7 +208,7 @@ class BookWormOllamaRAG:
         
         # Get relevant context
         context_chunks = self.getRelevantContext(
-            question, series_filter, max_book_number, n_results
+            question, series_filter, book_filter, max_book_number, n_results
         )
         
         if not context_chunks:
@@ -269,12 +277,14 @@ class BookWormOllamaRAG:
         print("\nCommands:")
         print("  • Type your question normally")
         print("  • Use /series <name> to filter by series")
+        print("  • Use /book <title> to filter by specific book")
         print("  • Use /books <number> to limit spoilers")
         print("  • Use /context to show retrieved passages")
         print("  • Type 'quit' or 'exit' to leave")
         print()
         
         series_filter = None
+        book_filter = None
         max_book_number = None
         show_context = False
         
@@ -295,6 +305,10 @@ class BookWormOllamaRAG:
                         series_filter = user_input[8:].strip()
                         print(f"📚 Series filter set to: {series_filter}")
                         continue
+                    elif user_input.startswith('/book '):
+                        book_filter = user_input[6:].strip()
+                        print(f"📖 Book filter set to: {book_filter}")
+                        continue
                     elif user_input.startswith('/books '):
                         try:
                             max_book_number = int(user_input[7:].strip())
@@ -309,6 +323,7 @@ class BookWormOllamaRAG:
                         continue
                     elif user_input == '/clear':
                         series_filter = None
+                        book_filter = None
                         max_book_number = None
                         show_context = False
                         print("🧹 Filters cleared")
@@ -318,7 +333,7 @@ class BookWormOllamaRAG:
                         continue
                 
                 # Process question
-                self.ask(user_input, series_filter, max_book_number, show_context)
+                self.ask(user_input, series_filter, book_filter, max_book_number, show_context)
                 
             except KeyboardInterrupt:
                 print("\n\n👋 Happy reading!\n")
@@ -335,8 +350,9 @@ def main():
     
     # Check command line arguments
     if len(sys.argv) > 1:
-        # Check for --series flag
+        # Check for flags
         series_filter = None
+        book_filter = None
         max_book_number = None
         show_context = True
         question_parts = []
@@ -346,6 +362,9 @@ def main():
             arg = sys.argv[i]
             if arg == "--series" and i + 1 < len(sys.argv):
                 series_filter = sys.argv[i + 1]
+                i += 2
+            elif arg == "--book" and i + 1 < len(sys.argv):
+                book_filter = sys.argv[i + 1]
                 i += 2
             elif arg == "--books" and i + 1 < len(sys.argv):
                 try:
@@ -363,12 +382,13 @@ def main():
         
         if question_parts:
             question = " ".join(question_parts)
-            rag.ask(question, series_filter=series_filter, max_book_number=max_book_number, show_context=show_context)
+            rag.ask(question, series_filter=series_filter, book_filter=book_filter, max_book_number=max_book_number, show_context=show_context)
         else:
             print("❌ No question provided")
             print("\nUsage examples:")
             print('  python3 app/ollama_chat.py "Who is Harry Potter?"')
-            print('  python3 app/ollama_chat.py --series RedRising --books 3 "Who is Darrow?"')
+            print('  python3 app/ollama_chat.py --series RedRising "Tell me about Darrow"')
+            print('  python3 app/ollama_chat.py --book "Light Bringer" "What happens at the end?"')
     else:
         # Start interactive chat mode
         rag.chatMode()
