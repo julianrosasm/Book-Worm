@@ -8,7 +8,7 @@ A Retrieval-Augmented Generation (RAG) system that lets you chat with your favor
 - **Spoiler Protection**: Only get information from books you've read
 - **Multi-Series Support**: Harry Potter, Red Rising, and easy expansion to new series
 - **Book Filtering**: Focus conversations on specific books or series
-- **Vector Search**: Semantic search through 769+ book passages and character information
+- **Vector Search**: Semantic search through 769+ Fandom book overviews and character information
 - **Local & Private**: All processing happens locally - your reading data stays private
 
 ## 🚀 Quick Start
@@ -168,7 +168,7 @@ n_results=15          # Search result count
 ### Red Rising (Complete)
 
 - All 6 books including latest trilogy
-- Main characters (Darrow, Mustang, etc.)
+- Main characters (Darrow)
 - 📖 **Books**: Red Rising → Light Bringer
 
 ## 🔍 How It Works
