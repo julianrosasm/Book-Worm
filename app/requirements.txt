@@ -2,3 +2,5 @@ chromadb
 langchain
 requests
 markdownify
+
+# Note: Ollama runs separately - install with: curl -fsSL https://ollama.ai/install.sh | sh
