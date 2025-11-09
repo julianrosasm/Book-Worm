@@ -1,7 +1,8 @@
 import chromadb
 import sys
+from sentence_transformers import SentenceTransformer
 
-def query_books(query_text, series_filter=None, max_book_number=None, n_results=5):
+def query_books(query_text, series_filter=None, max_book_number=None, n_results=15):
     """
     Query the Book-Worm vector database
     
@@ -14,6 +15,9 @@ def query_books(query_text, series_filter=None, max_book_number=None, n_results=
     # Connect to the existing ChromaDB database
     client = chromadb.PersistentClient(path="./chroma_db")
     collection = client.get_collection(name="book_worm")
+    
+    # Load the same embedding model used in the database
+    model = SentenceTransformer('all-mpnet-base-v2')
     
     # Build filter clause
     where_clause = None
@@ -32,7 +36,7 @@ def query_books(query_text, series_filter=None, max_book_number=None, n_results=
     elif len(filters) > 1:
         where_clause = {"$and": filters}
     
-    # Query
+    # Query using the proper embedding model
     print(f"\n{'='*80}")
     print(f"🔍 QUERY: {query_text}")
     if series_filter:
@@ -41,8 +45,11 @@ def query_books(query_text, series_filter=None, max_book_number=None, n_results=
         print(f"📖 Spoiler protection: Only showing books 1-{max_book_number}")
     print(f"{'='*80}\n")
     
+    # Use the same embedding model as the database
+    query_embedding = model.encode([query_text])
+    
     results = collection.query(
-        query_texts=[query_text],
+        query_embeddings=query_embedding.tolist(),
         n_results=n_results,
         where=where_clause
     )

@@ -4,6 +4,7 @@ sys.path.append('.')
 
 from query import query_books
 import chromadb
+from sentence_transformers import SentenceTransformer
 
 class BookWormOllamaRAG:
     """RAG system using Ollama for local LLM inference"""
@@ -22,6 +23,9 @@ class BookWormOllamaRAG:
         # Initialize ChromaDB connection
         self.client = chromadb.PersistentClient(path="./chroma_db")
         self.collection = self.client.get_collection(name="book_worm")
+        
+        # Load the same embedding model used in the database
+        self.model = SentenceTransformer('all-mpnet-base-v2')
         
         # Test Ollama connection
         self.ollama_ready = self.testConnection()
@@ -88,9 +92,10 @@ class BookWormOllamaRAG:
         elif len(filters) > 1:
             where_clause = {"$and": filters}
         
-        # Query ChromaDB
+        # Query ChromaDB using the proper embedding model
+        query_embedding = self.model.encode([query])
         results = self.collection.query(
-            query_texts=[query],
+            query_embeddings=query_embedding.tolist(),
             n_results=n_results,
             where=where_clause
         )
@@ -280,6 +285,7 @@ class BookWormOllamaRAG:
         print("  • Use /book <title> to filter by specific book")
         print("  • Use /books <number> to limit spoilers")
         print("  • Use /context to show retrieved passages")
+        print("  • Use /clear to reset all filters")
         print("  • Type 'quit' or 'exit' to leave")
         print()
         

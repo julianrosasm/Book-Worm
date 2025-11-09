@@ -19,7 +19,8 @@ SERIES_CONFIG = {
             {"title": "Iron_Gold_(Book_Four)", "type": "books", "name": "Iron Gold", "book_number": 4},
             {"title": "Dark_Age_(Book_Five)", "type": "books", "name": "Dark Age", "book_number": 5},
             {"title": "Light_Bringer_(Book_Six)", "type": "books", "name": "Light Bringer", "book_number": 6},
-            {"title": "Darrow_O'Lykos", "type": "characters", "name": "Darrow O'Lykos", "book_number": None}
+            {"title": "Darrow_O'Lykos", "type": "characters", "name": "Darrow O'Lykos", "book_number": None},
+            {"title": "Virginia_au_Augustus", "type": "characters", "name": "Mustang", "book_number": None},
         ],
         "book_names": ["Red Rising", "Golden Son", "Morning Star", "Iron Gold", "Dark Age", "Light Bringer"]
     },
