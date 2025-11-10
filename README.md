@@ -2,7 +2,7 @@
 
 A Retrieval-Augmented Generation (RAG) system that lets you chat with your favorite book series using AI. Ask questions about characters, plot points, and get intelligent answers with spoiler protection!
 
-## 🌟 Features
+## Features
 
 - **AI-Powered Chat**: Interactive conversations about your books using local Ollama models
 - **Spoiler Protection**: Only get information from books you've read
@@ -11,7 +11,7 @@ A Retrieval-Augmented Generation (RAG) system that lets you chat with your favor
 - **Vector Search**: Semantic search through 769+ Fandom book overviews and character information
 - **Local & Private**: All processing happens locally - your reading data stays private
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -83,7 +83,7 @@ AI: [Only uses Harry Potter series information]
 - `/help` - Show all commands
 - `/quit` - Exit chat
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Book-Worm/
@@ -105,7 +105,7 @@ Book-Worm/
     └── chroma.sqlite3       # Persistent storage
 ```
 
-## 🛠️ Installation Details
+## Installation Details
 
 ### Python Dependencies
 
@@ -131,7 +131,7 @@ python3 -c "import chromadb; print('ChromaDB: OK')"
 curl http://localhost:11434/api/tags
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Ollama Settings
 
@@ -157,7 +157,7 @@ max_tokens=1000,       # Response length
 n_results=15          # Search result count
 ```
 
-## 📚 Currently Available Series
+## Currently Available Series
 
 ### Harry Potter (Complete)
 
@@ -171,7 +171,7 @@ n_results=15          # Search result count
 - Main characters (Darrow)
 - 📖 **Books**: Red Rising → Light Bringer
 
-## 🔍 How It Works
+## How It Works
 
 1. **Vector Database**: Book content is chunked and embedded in ChromaDB
 2. **Semantic Search**: Your questions are matched against relevant passages
@@ -179,13 +179,13 @@ n_results=15          # Search result count
 4. **AI Generation**: Ollama generates responses based on retrieved context
 5. **Filtering**: Results respect spoiler boundaries and book filters
 
-## 🎯 Use Cases
+## Use Cases
 
 - **Memory Refresh**: Recall plot details before reading sequels
 - **Character Analysis**: Deep dive into character details
 - **Spoiler-Safe**: Explore only what you've read so far
 
-## 🚨 Troubleshooting
+## Troubleshooting
 
 ### Ollama Connection Issues
 
