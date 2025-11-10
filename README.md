@@ -1,6 +1,6 @@
 # BookWorm 📚
 
-A Retrieval-Augmented Generation (RAG) system that lets you chat with your favorite book series using AI. Ask questions about characters, plot points, and get intelligent answers with spoiler protection!
+A Retrieval-Augmented Generation (RAG) system that lets you chat with your favorite book series using AI. Ask questions about characters, plot points, and get answers with spoiler filtering.
 
 ## Features
 
@@ -8,8 +8,8 @@ A Retrieval-Augmented Generation (RAG) system that lets you chat with your favor
 - **Spoiler Protection**: Only get information from books you've read
 - **Multi-Series Support**: Harry Potter, Red Rising, and easy expansion to new series
 - **Book Filtering**: Focus conversations on specific books or series
-- **Vector Search**: Semantic search through 769+ Fandom book overviews and character information
-- **Local & Private**: All processing happens locally - your reading data stays private
+- **Vector Search**: Semantic search through Fandom book overviews and character information
+- **Local & Private**: All processing happens locally
 
 ## Quick Start
 
@@ -232,7 +232,3 @@ python3 app/ollama_chat.py --debug
 # Test search functionality
 python3 app/query.py "test query"
 ```
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
