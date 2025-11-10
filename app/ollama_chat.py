@@ -30,9 +30,9 @@ class BookWormOllamaRAG:
         # Test Ollama connection
         self.ollama_ready = self.testConnection()
         if not self.ollama_ready:
-            print("\n⚠️  Ollama is not ready. You can still search your books, but AI responses won't work.")
-            print("💡 To fix: Make sure Ollama is running with: ollama serve")
-            print("💡 Or try restarting the Ollama app\n")
+            print("\n  Ollama is not ready. You can still search your books, but AI responses won't work.")
+            print(" To fix: Make sure Ollama is running with: ollama serve")
+            print(" Or try restarting the Ollama app\n")
     
     def testConnection(self):
         """Test if Ollama is running and model is available"""
@@ -42,30 +42,30 @@ class BookWormOllamaRAG:
             if response.status_code == 200:
                 models = [model['name'] for model in response.json().get('models', [])]
                 if self.model_name in models:
-                    print(f"✅ Ollama connected with model: {self.model_name}")
+                    print(f" Ollama connected with model: {self.model_name}")
                     
                     # Test with a simple prompt
-                    print("🧪 Testing model response...")
+                    print(" Testing model response...")
                     test_response = self.callOllama("Say 'Hello' in one word.", max_tokens=10)
                     if "Error:" not in test_response:
-                        print("✅ Model test successful!")
+                        print(" Model test successful!")
                         return True
                     else:
-                        print(f"❌ Model test failed: {test_response}")
+                        print(f" Model test failed: {test_response}")
                         return False
                 else:
-                    print(f"⚠️  Model {self.model_name} not found. Available models: {models}")
-                    print("💡 You can pull a model with: ollama pull llama3.2")
+                    print(f"  Model {self.model_name} not found. Available models: {models}")
+                    print(" You can pull a model with: ollama pull llama3.2")
                     return False
             else:
-                print(f"❌ Ollama not responding. Status: {response.status_code}")
+                print(f" Ollama not responding. Status: {response.status_code}")
                 return False
         except requests.exceptions.ConnectionError:
-            print("❌ Cannot connect to Ollama. Is it running?")
-            print("💡 Start Ollama with: ollama serve")
+            print(" Cannot connect to Ollama. Is it running?")
+            print(" Start Ollama with: ollama serve")
             return False
         except Exception as e:
-            print(f"❌ Ollama connection error: {e}")
+            print(f" Ollama connection error: {e}")
             return False
     
     def getRelevantContext(self, query, series_filter=None, book_filter=None, max_book_number=None, n_results=15):
@@ -160,7 +160,7 @@ class BookWormOllamaRAG:
         }
         
         try:
-            print("🤔 Thinking... (this may take 10-30 seconds)")
+            print(" Thinking... (this may take 10-30 seconds)")
             response = requests.post(
                 f"{self.ollama_url}/api/generate",
                 json=data,
@@ -203,13 +203,13 @@ class BookWormOllamaRAG:
         print(f"❓ Question: {question}")
         
         if series_filter:
-            print(f"📚 Series filter: {series_filter}")
+            print(f" Series filter: {series_filter}")
         if book_filter:
-            print(f"📖 Book filter: {book_filter}")
+            print(f" Book filter: {book_filter}")
         if max_book_number:
-            print(f"📖 Spoiler protection: Books 1-{max_book_number} only")
+            print(f" Spoiler protection: Books 1-{max_book_number} only")
         
-        print(f"\n🔍 Searching for relevant information...")
+        print(f"\n Searching for relevant information...")
         
         # Get relevant context
         context_chunks = self.getRelevantContext(
@@ -217,14 +217,14 @@ class BookWormOllamaRAG:
         )
         
         if not context_chunks:
-            print("❌ No relevant information found in the books.")
+            print(" No relevant information found in the books.")
             return "I couldn't find any relevant information about that in the books."
         
-        print(f"✅ Found {len(context_chunks)} relevant passages")
+        print(f" Found {len(context_chunks)} relevant passages")
         
         # Show context if requested
         if show_context:
-            print(f"\n📄 RETRIEVED CONTEXT:")
+            print(f"\n RETRIEVED CONTEXT:")
             print("-" * 60)
             for chunk in context_chunks:
                 source = f"{chunk['series']}"
@@ -256,17 +256,17 @@ class BookWormOllamaRAG:
 
                     Answer:"""
 
-        print(f"🤖 Generating response with {self.model_name}...")
+        print(f" Generating response with {self.model_name}...")
         
         # Check if Ollama is ready
         if not self.ollama_ready:
-            print("\n⚠️  Ollama is not ready. Showing search results only.")
+            print("\n  Ollama is not ready. Showing search results only.")
             return "Ollama is not available. Please check the search results above."
         
         # Get response from Ollama
         response = self.callOllama(prompt)
         
-        print(f"\n💬 AI RESPONSE:")
+        print(f"\n AI RESPONSE:")
         print("-" * 60)
         print(response)
         print(f"\n{'='*80}\n")
@@ -276,7 +276,7 @@ class BookWormOllamaRAG:
     def chatMode(self):
         """Interactive chat mode"""
         print("=" * 80)
-        print("BOOK-WORM AI CHAT BOT")
+        print(" BOOK-WORM AI CHAT BOT")
         print("=" * 80)
         print("Ask me anything about your books!")
         print("\nCommands:")
@@ -296,10 +296,10 @@ class BookWormOllamaRAG:
         
         while True:
             try:
-                user_input = input("📚 Ask about your books: ").strip()
+                user_input = input(" Ask about your books: ").strip()
                 
                 if user_input.lower() in ['quit', 'exit', 'q']:
-                    print("\n👋 Happy reading!\n")
+                    print("\n Happy reading!\n")
                     break
                 
                 if not user_input:
@@ -309,43 +309,43 @@ class BookWormOllamaRAG:
                 if user_input.startswith('/'):
                     if user_input.startswith('/series '):
                         series_filter = user_input[8:].strip()
-                        print(f"📚 Series filter set to: {series_filter}")
+                        print(f" Series filter set to: {series_filter}")
                         continue
                     elif user_input.startswith('/book '):
                         book_filter = user_input[6:].strip()
-                        print(f"📖 Book filter set to: {book_filter}")
+                        print(f" Book filter set to: {book_filter}")
                         continue
                     elif user_input.startswith('/books '):
                         try:
                             max_book_number = int(user_input[7:].strip())
-                            print(f"📖 Spoiler protection: Books 1-{max_book_number}")
+                            print(f" Spoiler protection: Books 1-{max_book_number}")
                             continue
                         except ValueError:
-                            print("❌ Invalid book number")
+                            print(" Invalid book number")
                             continue
                     elif user_input == '/context':
                         show_context = not show_context
-                        print(f"📄 Show context: {'ON' if show_context else 'OFF'}")
+                        print(f" Show context: {'ON' if show_context else 'OFF'}")
                         continue
                     elif user_input == '/clear':
                         series_filter = None
                         book_filter = None
                         max_book_number = None
                         show_context = False
-                        print("🧹 Filters cleared")
+                        print(" Filters cleared")
                         continue
                     else:
-                        print("❌ Unknown command")
+                        print(" Unknown command")
                         continue
                 
                 # Process question
                 self.ask(user_input, series_filter, book_filter, max_book_number, show_context)
                 
             except KeyboardInterrupt:
-                print("\n\n👋 Happy reading!\n")
+                print("\n\n Happy reading!\n")
                 break
             except Exception as e:
-                print(f"\n❌ Error: {e}\n")
+                print(f"\n Error: {e}\n")
 
 
 def main():
@@ -377,7 +377,7 @@ def main():
                     max_book_number = int(sys.argv[i + 1])
                     i += 2
                 except ValueError:
-                    print(f"❌ Invalid book number: {sys.argv[i + 1]}")
+                    print(f" Invalid book number: {sys.argv[i + 1]}")
                     return
             elif arg == "--no-context":
                 show_context = False
@@ -390,7 +390,7 @@ def main():
             question = " ".join(question_parts)
             rag.ask(question, series_filter=series_filter, book_filter=book_filter, max_book_number=max_book_number, show_context=show_context)
         else:
-            print("❌ No question provided")
+            print(" No question provided")
             print("\nUsage examples:")
             print('  python3 app/ollama_chat.py "Who is Harry Potter?"')
             print('  python3 app/ollama_chat.py --series RedRising "Tell me about Darrow"')
