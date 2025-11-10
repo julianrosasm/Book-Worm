@@ -276,7 +276,7 @@ class BookWormOllamaRAG:
     def chatMode(self):
         """Interactive chat mode"""
         print("=" * 80)
-        print("🤖 BOOK-WORM AI CHAT BOT")
+        print("BOOK-WORM AI CHAT BOT")
         print("=" * 80)
         print("Ask me anything about your books!")
         print("\nCommands:")
