@@ -51,7 +51,7 @@ ollama serve
 python3 app/ollama_chat.py
 ```
 
-## 💬 How to Use
+## How to Use
 
 ### Basic Chat
 
