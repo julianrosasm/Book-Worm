@@ -61,6 +61,9 @@ Thumbs.db
 # pyenv
 .python-version
 
+# Vector Database
+chroma_db/
+
 # Temporary files
 *.tmp
 *.temp
