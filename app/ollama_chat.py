@@ -198,7 +198,7 @@ class BookWormOllamaRAG:
         """
         
         print(f"\n{'='*80}")
-        print(f"🤖 BOOK-WORM AI CHAT")
+        print(f"BOOK-WORM AI CHAT")
         print(f"{'='*80}")
         print(f"❓ Question: {question}")
         
