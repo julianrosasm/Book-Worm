@@ -163,13 +163,13 @@ n_results=15          # Search result count
 
 - All 7 books with plot summaries
 - Main characters (Harry, Hermione, Ron)
-- 📖 **Books**: Philosopher's Stone → Deathly Hallows
+- **Books**: Philosopher's Stone → Deathly Hallows
 
 ### Red Rising (Complete)
 
 - All 6 books including latest trilogy
-- Main characters (Darrow)
-- 📖 **Books**: Red Rising → Light Bringer
+- Few characters (Darrow and Mustang)
+- **Books**: Red Rising → Light Bringer
 
 ## How It Works
 
@@ -233,6 +233,6 @@ python3 app/ollama_chat.py --debug
 python3 app/query.py "test query"
 ```
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
