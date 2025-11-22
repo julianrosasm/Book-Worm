@@ -20,17 +20,17 @@ def load_data_to_chromadb(data_path="app/data", collection_name="book_worm"):
     # Delete existing collection if it exists for fresh start
     try:
         client.delete_collection(name=collection_name)
-        print(f"🗑️  Deleted existing collection: {collection_name}")
+        print(f"Deleted existing collection: {collection_name}")
     except ValueError as e:
         if "does not exist" in str(e).lower():
-            print(f"ℹ️  Collection '{collection_name}' doesn't exist yet (first run)")
+            print(f"Collection '{collection_name}' doesn't exist yet (first run)")
         else:
             print(f"⚠️  Error deleting collection: {e}")
     except Exception as e:
         print(f"⚠️  Error deleting collection: {e}")
     
     # Force cleanup of old data
-    print("🧹 Forcing cleanup of old vector database files...")
+    print("Forcing cleanup of old vector database files...")
     import shutil
     import os
     
@@ -42,7 +42,7 @@ def load_data_to_chromadb(data_path="app/data", collection_name="book_worm"):
             if os.path.isdir(item_path) and len(item) == 36:  # UUID folders
                 try:
                     shutil.rmtree(item_path)
-                    print(f"🗑️  Removed old database folder: {item}")
+                    print(f"Removed old database folder: {item}")
                 except Exception as e:
                     print(f"⚠️  Could not remove {item}: {e}")
     
@@ -50,7 +50,7 @@ def load_data_to_chromadb(data_path="app/data", collection_name="book_worm"):
     client = chromadb.PersistentClient(path="./chroma_db")
     
     # Load high-quality embedding model
-    print("📥 Loading embedding model...")
+    print("Loading embedding model...")
     model = SentenceTransformer('all-mpnet-base-v2')
     print("✅ Model loaded: all-mpnet-base-v2 (768 dimensions)")
     
@@ -67,7 +67,7 @@ def load_data_to_chromadb(data_path="app/data", collection_name="book_worm"):
         embedding_function=CustomEmbeddingFunction()
     )
     
-    print(f"📊 Loading data into ChromaDB collection: {collection_name}")
+    print(f"Loading data into ChromaDB collection: {collection_name}")
     print(f"{'='*60}\n")
     
     total_chunks = 0
@@ -82,7 +82,7 @@ def load_data_to_chromadb(data_path="app/data", collection_name="book_worm"):
         if not os.path.isdir(series_path):
             continue
             
-        print(f"📚 Processing series: {series_name}")
+        print(f"Processing series: {series_name}")
         
         # Walk through types (books, characters, etc.)
         for doc_type in os.listdir(series_path):
@@ -155,13 +155,13 @@ def load_data_to_chromadb(data_path="app/data", collection_name="book_worm"):
     # Add all documents to ChromaDB in one batch
     if documents:
         print(f"\n{'='*60}")
-        print(f"💾 Adding {total_chunks} chunks to ChromaDB...")
+        print(f"Adding {total_chunks} chunks to ChromaDB...")
         
         # ChromaDB has a batch size limit, so we'll add in batches
         batch_size = 100  # Smaller batches for custom embedding function
         for i in range(0, len(documents), batch_size):
             end_idx = min(i + batch_size, len(documents))
-            print(f"  🔄 Processing batch {i//batch_size + 1}/{(len(documents)-1)//batch_size + 1}...")
+            print(f"  Processing batch {i//batch_size + 1}/{(len(documents)-1)//batch_size + 1}...")
             
             collection.add(
                 documents=documents[i:end_idx],
@@ -169,7 +169,7 @@ def load_data_to_chromadb(data_path="app/data", collection_name="book_worm"):
                 ids=ids[i:end_idx]
             )
         
-        print(f"\n✅ Successfully loaded {total_chunks} chunks into ChromaDB!")
+        print(f"\n✅ Successfully loaded {total_chunks} chunks into ChromaDB")
         print(f"{'='*60}")
 
     else:
