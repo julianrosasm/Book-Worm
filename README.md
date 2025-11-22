@@ -1,14 +1,15 @@
 # BookWorm 📚
 
-A Retrieval-Augmented Generation (RAG) system that lets you chat with your favorite book series using AI. Ask questions about characters, plot points, and get answers with spoiler filtering.
+A Retrieval-Augmented Generation (RAG) system that lets you chat with your favorite book series using AI. Ask questions about characters, events, and plot points from your favorite series.
 
 ## Features
 
-- **AI-Powered Chat**: Interactive conversations about your books using local Ollama models
-- **Spoiler Protection**: Only get information from books you've read
+- **AI-Powered Chat**: Interactive conversations about your favorite series using local Ollama models
+- **Character/Event Focus**: Ask about characters, events, and plot points
 - **Multi-Series Support**: Harry Potter, Red Rising, and easy expansion to new series
-- **Book Filtering**: Focus conversations on specific books or series
-- **Vector Search**: Semantic search through Fandom book overviews and character information
+- **Series Filtering**: Focus conversations on a specific series
+- **Spoiler Prevention**: AI is instructed to avoid revealing major spoilers (e.g., character deaths) in its answers
+- **Vector Search**: Semantic search through Fandom character and event information
 - **Local & Private**: All processing happens locally
 
 ## Quick Start
@@ -47,8 +48,11 @@ pip install -r app/requirements.txt
 # Start Ollama (if not already running)
 ollama serve
 
-# Launch BookWorm Chat
+# Launch BookWorm Chat (CLI)
 python3 app/ollama_chat.py
+
+# Or launch the Streamlit web app (recommended)
+PYTHONPATH=$PWD streamlit run app/app_streamlit.py
 ```
 
 ## How to Use
@@ -60,27 +64,19 @@ You: Tell me about Darrow's character development
 AI: Darrow undergoes significant transformation throughout the Red Rising series...
 ```
 
-### Book-Specific Questions
-
-```
-You: /book Light Bringer
-You: What happens in the ending?
-AI: [Focuses only on Light Bringer content]
-```
-
 ### Series Filtering
 
 ```
-You: /book HarryPotter
-You: Compare Harry and Hermione's friendship
-AI: [Only uses Harry Potter series information]
+You: /series RedRising
+You: Tell me about Mustang
+AI: [Only uses Red Rising series information]
 ```
 
 ### Available Commands
 
-- `/book <book_name>` - Filter to specific book
 - `/series <series_name>` - Filter to specific series
-- `/help` - Show all commands
+- `/context` - Show retrieved passages (CLI only)
+- `/clear` - Reset all filters (CLI only)
 - `/quit` - Exit chat
 
 ## Project Structure
@@ -96,11 +92,11 @@ Book-Worm/
 │   ├── load_to_vectordb.py  # ChromaDB setup
 │   └── data/                # Book content (JSON format)
 │       ├── HarryPotter/
-│       │   ├── books/       # Plot summaries
-│       │   └── characters/  # Character information
+│       │   ├── characters/  # Character information
+│       │   └── events/      # Event information
 │       └── RedRising/
-│           ├── books/
-│           └── characters/
+│           ├── characters/
+│           └── events/
 └── chroma_db/               # Vector database
     └── chroma.sqlite3       # Persistent storage
 ```
@@ -161,15 +157,13 @@ n_results=15          # Search result count
 
 ### Harry Potter (Complete)
 
-- All 7 books with plot summaries
 - Main characters (Harry, Hermione, Ron)
-- **Books**: Philosopher's Stone → Deathly Hallows
+- Key events from the series
 
 ### Red Rising (Complete)
 
-- All 6 books including latest trilogy
-- Few characters (Darrow and Mustang)
-- **Books**: Red Rising → Light Bringer
+- Main characters (Darrow and Mustang)
+- Key events from the series
 
 ## How It Works
 
@@ -177,13 +171,12 @@ n_results=15          # Search result count
 2. **Semantic Search**: Your questions are matched against relevant passages
 3. **Context Assembly**: Top matching passages are collected
 4. **AI Generation**: Ollama generates responses based on retrieved context
-5. **Filtering**: Results respect spoiler boundaries and book filters
+5. **Filtering**: Results respect series filters
 
 ## Use Cases
 
 - **Memory Refresh**: Recall plot details before reading sequels
-- **Character Analysis**: Deep dive into character details
-- **Spoiler-Safe**: Explore only what you've read so far
+- **Character Analysis**: Deep dive into character and event details
 
 ## Troubleshooting
 
@@ -231,4 +224,7 @@ python3 app/ollama_chat.py --debug
 
 # Test search functionality
 python3 app/query.py "test query"
+
+# Run the Streamlit web app
+PYTHONPATH=$PWD streamlit run app/app_streamlit.py
 ```
