@@ -8,8 +8,7 @@ def query_books(query_text, series_filter=None, max_book_number=None, n_results=
     
     Args:
         query_text: Your question or search query
-        series_filter: Optional - filter by series name (e.g., "RedRising", "Mistborn")
-        max_book_number: Optional - prevent spoilers by only showing books up to this number
+        series_filter: Optional - filter by series name (e.g., "Red Rising", "Harry Potter")
         n_results: Number of results to return
     """
     # Connect to the existing ChromaDB database
@@ -26,11 +25,6 @@ def query_books(query_text, series_filter=None, max_book_number=None, n_results=
     if series_filter:
         filters.append({"series": series_filter})
     
-    if max_book_number is not None:
-        # Only show chunks from books <= max_book_number
-        # Chunks without book_number will be excluded (correct behavior for spoiler prevention)
-        filters.append({"book_number": {"$lte": max_book_number}})
-    
     if len(filters) == 1:
         where_clause = filters[0]
     elif len(filters) > 1:
@@ -38,11 +32,9 @@ def query_books(query_text, series_filter=None, max_book_number=None, n_results=
     
     # Query using the proper embedding model
     print(f"\n{'='*80}")
-    print(f"🔍 QUERY: {query_text}")
+    print(f"QUERY: {query_text}")
     if series_filter:
-        print(f"📚 Series filter: {series_filter}")
-    if max_book_number:
-        print(f"📖 Spoiler protection: Only showing books 1-{max_book_number}")
+        print(f"Series filter: {series_filter}")
     print(f"{'='*80}\n")
     
     # Use the same embedding model as the database
@@ -66,16 +58,12 @@ def query_books(query_text, series_filter=None, max_book_number=None, n_results=
     )):
         similarity = (1 - distance) * 100
         print(f"{'─'*80}")
-        print(f"📄 RESULT #{i+1} - Similarity: {similarity:.1f}%")
+        print(f"RESULT #{i+1} - Similarity: {similarity:.1f}%")
         print(f"{'─'*80}")
         print(f"Series:  {metadata.get('series', 'N/A')}")
         print(f"Type:    {metadata.get('type', 'N/A')}")
         print(f"Name:    {metadata.get('name', 'N/A')}")
         print(f"Section: {metadata.get('section', 'N/A')}")
-        
-        if 'book_number' in metadata and metadata['book_number'] is not None:
-            print(f"Book:    #{metadata['book_number']} - {metadata.get('source_book', 'N/A')}")
-        
         print(f"\n{doc}\n")
     
     print(f"{'='*80}\n")
@@ -90,37 +78,34 @@ if __name__ == "__main__":
     else:
         # Interactive mode
         print("="*80)
-        print("📚 BOOK-WORM RAG - Interactive Query Tool")
+        print("BOOK-WORM RAG - Interactive Query")
         print("="*80)
         print("\nExamples:")
         print("  • Who is Darrow?")
-        print("  • What are Vin's abilities?")
-        print("  • How does allomancy work?")
+        print("  • What happens at the Institute?")
+        print("  • Who is Ron Weasley?")
         print("\nType 'quit' to exit\n")
         
         while True:
             try:
-                query = input("🔍 Your question: ").strip()
+                query = input("Your question: ").strip()
                 
                 if query.lower() in ['quit', 'exit', 'q']:
-                    print("\n👋 Goodbye!\n")
+                    print("\nGoodbye!\n")
                     break
                 
                 if not query:
                     continue
                 
                 # Ask about filters
-                series = input("📚 Filter by series? (press Enter to skip): ").strip()
+                series = input("Filter by series? (press Enter to skip): ").strip()
                 series = series if series else None
                 
-                book_num = input("📖 Max book number for spoiler protection? (press Enter to skip): ").strip()
-                book_num = int(book_num) if book_num.isdigit() else None
-                
                 # Run query
-                query_books(query, series_filter=series, max_book_number=book_num)
+                query_books(query, series_filter=series)
                 
             except KeyboardInterrupt:
-                print("\n\n👋 Goodbye!\n")
+                print("\n\nGoodbye!\n")
                 break
             except Exception as e:
                 print(f"\n❌ Error: {e}\n")
