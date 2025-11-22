@@ -1,0 +1,37 @@
+{
+  "Red Rising": {
+    "wiki": "red-rising.fandom.com",
+    "pages": [
+      {
+        "title": "Darrow_O'Lykos",
+        "type": "characters",
+        "name": "Darrow O'Lykos"
+      },
+      {
+        "title": "Virginia_au_Augustus",
+        "type": "characters",
+        "name": "Mustang"
+      }
+    ]
+  },
+  "Harry Potter": {
+    "wiki": "harrypotter.fandom.com",
+    "pages": [
+      {
+        "title": "Harry_Potter",
+        "type": "characters",
+        "name": "Harry Potter"
+      },
+      {
+        "title": "Hermione_Granger",
+        "type": "characters",
+        "name": "Hermione Granger"
+      },
+      {
+        "title": "Ron_Weasley",
+        "type": "characters",
+        "name": "Ron Weasley"
+      }
+    ]
+  }
+}
