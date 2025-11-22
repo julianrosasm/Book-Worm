@@ -68,39 +68,22 @@ class BookWormOllamaRAG:
             print(f" Ollama connection error: {e}")
             return False
     
-    def getRelevantContext(self, query, series_filter=None, book_filter=None, max_book_number=None, n_results=7):
+    def getRelevantContext(self, query, series_filter=None, n_results=7):
         """Retrieve relevant context from ChromaDB"""
-        
-        # Build filter
         where_clause = None
         filters = []
-        
         if series_filter:
             filters.append({"series": series_filter})
-        if book_filter:
-            # Filter by book name (matches source_book or name field)
-            book_filters = [
-                {"source_book": {"$eq": book_filter}},
-                {"name": {"$eq": book_filter}}
-            ]
-            filters.append({"$or": book_filters})
-        if max_book_number is not None:
-            filters.append({"book_number": {"$lte": max_book_number}})
-        
         if len(filters) == 1:
             where_clause = filters[0]
         elif len(filters) > 1:
             where_clause = {"$and": filters}
-        
-        # Query ChromaDB using the proper embedding model
         query_embedding = self.model.encode([query])
         results = self.collection.query(
             query_embeddings=query_embedding.tolist(),
             n_results=n_results,
             where=where_clause
         )
-        
-        # Format results
         context_chunks = []
         for doc, metadata, distance in zip(
             results['documents'][0], 
@@ -108,18 +91,14 @@ class BookWormOllamaRAG:
             results['distances'][0]
         ):
             similarity = (1 - distance) * 100
-            
             context_chunks.append({
                 'text': doc,
                 'series': metadata.get('series', ''),
                 'type': metadata.get('type', ''),
                 'name': metadata.get('name', ''),
                 'section': metadata.get('section', ''),
-                'book_number': metadata.get('book_number'),
-                'source_book': metadata.get('source_book', ''),
                 'similarity': similarity
             })
-        
         return context_chunks
     
     def formatContext(self, context_chunks):
@@ -132,15 +111,12 @@ class BookWormOllamaRAG:
         for i, chunk in enumerate(context_chunks, 1):
             # Build source info
             source = f"{chunk['series']}"
-            if chunk['book_number']:
-                source += f" - Book {chunk['book_number']}"
-            if chunk['source_book']:
-                source += f" ({chunk['source_book']})"
             if chunk['name']:
                 source += f" - {chunk['name']}"
+            if chunk['type']:
+                source += f" - {chunk['type']}"
             if chunk['section']:
                 source += f" - {chunk['section']}"
-            
             context += f"[Source {i}] {source} (Relevance: {chunk['similarity']:.1f}%)\n"
             context += f"{chunk['text']}\n\n"
         
@@ -164,7 +140,7 @@ class BookWormOllamaRAG:
             response = requests.post(
                 f"{self.ollama_url}/api/generate",
                 json=data,
-                timeout=120  # Increased timeout to 2 minutes
+                timeout=120  # Timeout set to 2 minutes
             )
             
             if response.status_code == 200:
@@ -180,8 +156,7 @@ class BookWormOllamaRAG:
         except Exception as e:
             return f"Error calling Ollama: {e}"
     
-    def ask(self, question, series_filter=None, book_filter=None, max_book_number=None, 
-            show_context=False, n_results=7):
+    def ask(self, question, series_filter=None, show_context=False, n_results=7):
         """
         Ask a question about your books and get an AI-generated response
         
@@ -204,16 +179,12 @@ class BookWormOllamaRAG:
         
         if series_filter:
             print(f" Series filter: {series_filter}")
-        if book_filter:
-            print(f" Book filter: {book_filter}")
-        if max_book_number:
-            print(f" Spoiler protection: Books 1-{max_book_number} only")
         
         print(f"\n Searching for relevant information...")
         
         # Get relevant context
         context_chunks = self.getRelevantContext(
-            question, series_filter, book_filter, max_book_number, n_results
+            question, series_filter, n_results
         )
         
         if not context_chunks:
@@ -228,10 +199,12 @@ class BookWormOllamaRAG:
             print("-" * 60)
             for chunk in context_chunks:
                 source = f"{chunk['series']}"
-                if chunk['book_number']:
-                    source += f" - Book {chunk['book_number']}"
-                if chunk['source_book']:
-                    source += f" ({chunk['source_book']})"
+                if chunk['name']:
+                    source += f" - {chunk['name']}"
+                if chunk['type']:
+                    source += f" - {chunk['type']}"
+                if chunk['section']:
+                    source += f" - {chunk['section']}"
                 print(f"• {source} (Relevance: {chunk['similarity']:.1f}%)")
                 print(f"  {chunk['text'][:100]}...")
                 print()
@@ -282,8 +255,6 @@ class BookWormOllamaRAG:
         print("\nCommands:")
         print("  • Type your question normally")
         print("  • Use /series <name> to filter by series")
-        print("  • Use /book <title> to filter by specific book")
-        print("  • Use /books <number> to limit spoilers")
         print("  • Use /context to show retrieved passages")
         print("  • Use /clear to reset all filters")
         print("  • Type 'quit' or 'exit' to leave")
@@ -339,7 +310,7 @@ class BookWormOllamaRAG:
                         continue
                 
                 # Process question
-                self.ask(user_input, series_filter, book_filter, max_book_number, show_context)
+                self.ask(user_input, series_filter, show_context)
                 
             except KeyboardInterrupt:
                 print("\n\n Happy reading!\n")
