@@ -68,7 +68,7 @@ class BookWormOllamaRAG:
             print(f" Ollama connection error: {e}")
             return False
     
-    def getRelevantContext(self, query, series_filter=None, book_filter=None, max_book_number=None, n_results=15):
+    def getRelevantContext(self, query, series_filter=None, book_filter=None, max_book_number=None, n_results=7):
         """Retrieve relevant context from ChromaDB"""
         
         # Build filter
@@ -181,7 +181,7 @@ class BookWormOllamaRAG:
             return f"Error calling Ollama: {e}"
     
     def ask(self, question, series_filter=None, book_filter=None, max_book_number=None, 
-            show_context=False, n_results=15):
+            show_context=False, n_results=7):
         """
         Ask a question about your books and get an AI-generated response
         
