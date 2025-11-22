@@ -139,13 +139,6 @@ def load_data_to_chromadb(data_path="app/data", collection_name="book_worm"):
                             'section': chunk.get('section', ''),
                         }
                         
-                        # Add book_number and source_book if they exist
-                        if 'book_number' in chunk and chunk['book_number'] is not None:
-                            metadata['book_number'] = chunk['book_number']
-                        
-                        if 'source_book' in chunk and chunk['source_book'] is not None:
-                            metadata['source_book'] = chunk['source_book']
-                        
                         # Add to batches
                         documents.append(enhanced_text)
                         metadatas.append(metadata)
