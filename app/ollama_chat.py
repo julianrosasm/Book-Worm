@@ -163,8 +163,6 @@ class BookWormOllamaRAG:
         Args:
             question: Your question about the books
             series_filter: Filter by series (e.g., "HarryPotter", "RedRising")
-            book_filter: Filter by specific book (e.g., "Light Bringer", "Philosopher's Stone")
-            max_book_number: Prevent spoilers by limiting to books 1-N
             show_context: Whether to show the retrieved context
             n_results: Number of context chunks to retrieve
         
@@ -222,9 +220,8 @@ class BookWormOllamaRAG:
                     Guidelines:
                         - Answer based only on the provided book information
                         - Be conversational, helpful, and engaging
-                        - Mention which book or character the information comes from when relevant
                         - If the information is incomplete, acknowledge what you don't know
-                        - Keep your answer focused and avoid unnecessary spoilers
+                        - Keep your answer focused and avoid unnecessary spoilers like character deaths
                         - Write in a natural, friendly tone
 
                     Answer:"""
@@ -365,7 +362,6 @@ def main():
             print("\nUsage examples:")
             print('  python3 app/ollama_chat.py "Who is Harry Potter?"')
             print('  python3 app/ollama_chat.py --series RedRising "Tell me about Darrow"')
-            print('  python3 app/ollama_chat.py --book "Light Bringer" "What happens at the end?"')
     else:
         # Start interactive chat mode
         rag.chatMode()
