@@ -221,7 +221,7 @@ class BookWormOllamaRAG:
                         - Answer based only on the provided book information
                         - Be conversational, helpful, and engaging
                         - If the information is incomplete, acknowledge what you don't know
-                        - Keep your answer focused and avoid unnecessary spoilers like character deaths
+                        - Do not mention character deaths or major plot twists under any circumstances.
                         - Write in a natural, friendly tone
 
                     Answer:"""
