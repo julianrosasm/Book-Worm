@@ -11,6 +11,201 @@
         "title": "Virginia_au_Augustus",
         "type": "characters",
         "name": "Mustang"
+      },
+      {
+        "title": "Cassius_au_Bellona",
+        "type": "characters",
+        "name": "Cassius"
+      },
+      {
+        "title": "Sevro_au_Barca",
+        "type": "characters",
+        "name": "Sevro"
+      },
+      {
+        "title": "Adrius_au_Augustus",
+        "type": "characters",
+        "name": "The Jackal (Adrius)"
+      },
+      {
+        "title": "Roque_au_Fabii",
+        "type": "characters",
+        "name": "Roque"
+      },
+      {
+        "title": "Fitchner_au_Barca",
+        "type": "characters",
+        "name": "Fitchner"
+      },
+      {
+        "title": "Lorn_au_Arcos",
+        "type": "characters",
+        "name": "Lorn"
+      },
+      {
+        "title": "Antonia_au_Severus",
+        "type": "characters",
+        "name": "Antonia"
+      },
+      {
+        "title": "Clown",
+        "type": "characters",
+        "name": "Clown"
+      },
+      {
+        "title": "Dancer_O'Faran",
+        "type": "characters",
+        "name": "Dancer"
+      },
+      {
+        "title": "Deanna_O'Lykos",
+        "type": "characters",
+        "name": "Holiday"
+      },
+      {
+        "title": "Dio",
+        "type": "characters",
+        "name": "Dio"
+      },
+      {
+        "title": "Eo_of_Lykos",
+        "type": "characters",
+        "name": "Eo"
+      },
+      {
+        "title": "Evey",
+        "type": "characters",
+        "name": "Evey"
+      },
+      {
+        "title": "Harmony",
+        "type": "characters",
+        "name": "Harmony"
+      },
+      {
+        "title": "Horatius_au_Savag",
+        "type": "characters",
+        "name": "Screwface"
+      },
+      {
+        "title": "Julian_au_Bellona",
+        "type": "characters",
+        "name": "Julian"
+      },
+      {
+        "title": "Karnus_au_Bellona",
+        "type": "characters",
+        "name": "Karnus"
+      },
+      {
+        "title": "Kieran_O'Lykos",
+        "type": "characters",
+        "name": "Lyria"
+      },
+      {
+        "title": "Lea",
+        "type": "characters",
+        "name": "Lea"
+      },
+      {
+        "title": "Lilath_au_Faran",
+        "type": "characters",
+        "name": "Lilath"
+      },
+      {
+        "title": "Matteo",
+        "type": "characters",
+        "name": "Matteo"
+      },
+      {
+        "title": "Mickey",
+        "type": "characters",
+        "name": "Mickey"
+      },
+      {
+        "title": "Milia_au_Trachus",
+        "type": "characters",
+        "name": "Milia"
+      },
+      {
+        "title": "Narol_of_Lykos",
+        "type": "characters",
+        "name": "Narol"
+      },
+      {
+        "title": "Nero_au_Augustus",
+        "type": "characters",
+        "name": "Nero"
+      },
+      {
+        "title": "Pax_au_Telemanus",
+        "type": "characters",
+        "name": "Pax"
+      },
+      {
+        "title": "Pebble",
+        "type": "characters",
+        "name": "Pebble"
+      },
+      {
+        "title": "Priam_au_Caan",
+        "type": "characters",
+        "name": "Priam"
+      },
+      {
+        "title": "Proctor_Apollo",
+        "type": "characters",
+        "name": "Proctor Apollo"
+      },
+      {
+        "title": "Proctor_Jupiter",
+        "type": "characters",
+        "name": "Proctor Jupiter"
+      },
+      {
+        "title": "Proctor_Mercury",
+        "type": "characters",
+        "name": "Proctor Mercury"
+      },
+      {
+        "title": "Quinn",
+        "type": "characters",
+        "name": "Quinn"
+      },
+      {
+        "title": "Tactus_au_Valii-Rath",
+        "type": "characters",
+        "name": "Tactus"
+      },
+      {
+        "title": "Tiberius_au_Bellona",
+        "type": "characters",
+        "name": "Tiberius"
+      },
+      {
+        "title": "Ugly_Dan",
+        "type": "characters",
+        "name": "Ugly Dan"
+      },
+      {
+        "title": "Vixus_au_Sarna",
+        "type": "characters",
+        "name": "Vixus"
+      },
+      {
+        "title": "Weed",
+        "type": "characters",
+        "name": "Weed"
+      },
+      {
+        "title": "The_Institute",
+        "type": "locations",
+        "name": "The Institute"
+      },
+      {
+        "title": "The_Conquering",
+        "type": "events",
+        "name": "The Conquering"
       }
     ]
   },

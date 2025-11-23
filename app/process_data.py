@@ -189,7 +189,7 @@ for series_name, series_config in SERIES_CONFIG.items():
     for entry in pages:
         page_title = entry["title"]
         doc_type = entry["type"]  # e.g., characters, events
-        doc_name = entry["name"]  # e.g., "Darrow O'Lykos", "Battle of the Astronomy Tower"
+        doc_name = entry["name"]  # e.g., "Darrow O'Lykos", "The Institute"
 
         # Create subfolder for the type if it doesn't exist
         type_path = os.path.join(data_path, doc_type)
