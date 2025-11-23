@@ -5,8 +5,9 @@ A Retrieval-Augmented Generation (RAG) system that lets you chat with your favor
 ## Features
 
 - **AI-Powered Chat**: Interactive conversations about your favorite series using local Ollama models
-- **Character/Event Focus**: Ask about characters, events, and plot points
+- **Multi-purpose**: Ask about characters, events, and locations
 - **Multi-Series Support**: Harry Potter, Red Rising, and easy expansion to new series
+- **Multi-Category Support**: Characters, events, locations, and easy expansion to new categories (e.g. Technology)
 - **Series Filtering**: Focus conversations on a specific series
 - **Spoiler Prevention**: AI is instructed to avoid revealing major spoilers (e.g., character deaths) in its answers
 - **Vector Search**: Semantic search through Fandom character and event information
