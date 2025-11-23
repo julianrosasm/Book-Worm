@@ -13,6 +13,9 @@ A Retrieval-Augmented Generation (RAG) system that lets you chat with your favor
 - **Vector Search**: Semantic search through Fandom character and event information
 - **Local & Private**: All processing happens locally
 
+## Architecture
+<img width="828" height="520" alt="Screenshot 2025-11-23 at 12 25 54 PM" src="https://github.com/user-attachments/assets/fd28cd01-bafd-4972-b447-9d7f646fd2d6" />
+
 ## Demo
 https://github.com/user-attachments/assets/3fb5417c-4cf1-4e59-81ab-9c0c6a3a5fad
 
