@@ -14,7 +14,7 @@ A Retrieval-Augmented Generation (RAG) system that lets you chat with your favor
 - **Local & Private**: All processing happens locally
 
 ## Demo
-https://github.com/user-attachments/assets/490d587c-a812-4d11-8818-982bce0f940c
+https://github.com/user-attachments/assets/3fb5417c-4cf1-4e59-81ab-9c0c6a3a5fad
 
 ## Quick Start
 
