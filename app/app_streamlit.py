@@ -13,7 +13,8 @@ question = st.text_area("Ask your question:")
 
 if st.button("Ask"):
     if question.strip():
-        response = rag.ask(question, series_filter=series if series else None)
+        with st.spinner("Loading..."):
+            response = rag.ask(question, series_filter=series if series else None)
         st.markdown("### Response")
         st.write(response)
     else:

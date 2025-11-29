@@ -122,7 +122,7 @@ class BookWormOllamaRAG:
         
         return context
     
-    def callOllama(self, prompt, temperature=0.7, max_tokens=1000):
+    def callOllama(self, prompt, temperature=0.2, max_tokens=1000):
         """Make a request to Ollama API"""
         
         data = {
@@ -156,7 +156,7 @@ class BookWormOllamaRAG:
         except Exception as e:
             return f"Error calling Ollama: {e}"
     
-    def ask(self, question, series_filter=None, show_context=False, n_results=7):
+    def ask(self, question, series_filter=None, show_context=False, n_results=12):
         """
         Ask a question about your books and get an AI-generated response
         
