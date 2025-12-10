@@ -210,21 +210,20 @@ class BookWormOllamaRAG:
         # Format context for LLM
         context = self.formatContext(context_chunks)
         
-        # Create prompt
-        prompt = f"""You are a knowledgeable book assistant helping someone understand books they've read. 
-                    
-                    {context}
-                    
-                    Based on the information above, please answer this question: {question}
+        # Create prompt with stronger spoiler protection
+        prompt = f"""You are a helpful book assistant. Your role is to discuss characters, settings, and events from books WITHOUT revealing spoilers.
 
-                    Guidelines:
-                        - Answer based only on the provided book information
-                        - Be conversational, helpful, and engaging
-                        - If the information is incomplete, acknowledge what you don't know
-                        - Do not mention character deaths or major plot twists under any circumstances.
-                        - Write in a natural, friendly tone
+            {context}
 
-                    Answer:"""
+            Question: {question}
+
+            CRITICAL RULES:
+            1. If the question asks about a character's fate, death, or future outcomes - REFUSE to answer. Say: "I can't answer that without spoiling the story. I can only discuss early character details."
+            2. If the context contains information about deaths or major plot twists - DO NOT include that in your answer, even if asked directly.
+            3. Only discuss character backgrounds, early story events, and general world-building.
+            4. If uncertain whether something is a spoiler, err on the side of caution and don't mention it.
+
+            Answer based only on the provided information, keeping spoilers completely hidden:"""
 
         print(f" Generating response with {self.model_name}...")
         
