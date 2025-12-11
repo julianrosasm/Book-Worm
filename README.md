@@ -144,7 +144,7 @@ To use a different model:
 
 ```python
 # In ollama_chat.py
-BookWormOllamaRAG(model_name="llama3.1:latest")
+BookWormOllamaRAG(model_name="llama3.2:latest")
 ```
 
 ### Model
@@ -155,9 +155,9 @@ BookWormOllamaRAG(model_name="llama3.1:latest")
 
 ```python
 # In ollama_chat.py, modify these settings:
-temperature=0.7,        # Creativity (0.0-1.0)
+temperature=0.2,        # Creativity (0.0-1.0)
 max_tokens=1000,       # Response length
-n_results=15          # Search result count
+n_results=12          # Search result count
 ```
 
 ## Currently Available Series
